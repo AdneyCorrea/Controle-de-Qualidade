@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Controle de Qualidade</title>
+  <link rel="icon" href="/assets/logo.ico">
+  <link rel="stylesheet" href="/assets/styles.css">
+</head>
+<body>
+  <div id="loading" class="loading-overlay">
+    <div class="loading-card">
+      <div class="spinner"></div>
+      <div class="loading-title">Carregando painel</div>
+      <div id="loadingText" class="loading-text">Lendo hardware, drivers e discos...</div>
+    </div>
+  </div>
+
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-logo"><img id="logoImage" src="/assets/logo.png" alt="logo"></div>
+        <div>
+          <h1 id="appTitle">Controle de Qualidade</h1>
+          <p id="appSubtitle">Diagnóstico visual do sistema, discos e drivers</p>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button id="refreshBtn" class="btn btn-primary">Atualizar dados</button>
+        <button id="fullscreenBtn" class="btn btn-secondary">Tela cheia</button>
+        <button id="driverUpdateBtn" class="btn btn-tertiary actions-wide">Atualizar Drivers</button>
+      </div>
+
+      <section class="panel sidebar-panel">
+        <div class="panel-head">Resumo rápido</div>
+        <div id="summaryGrid" class="summary-grid"></div>
+      </section>
+
+      <section class="panel sidebar-panel sidebar-note">
+        <div class="panel-head">Leitura da árvore</div>
+        <div class="note-body">
+          <div class="legend-row"><span class="legend-icon legend-warn">⚠</span><span>Driver faltante ou com problema</span></div>
+          <div class="legend-row"><span class="legend-icon legend-ok">•</span><span>Driver lido sem alerta</span></div>
+          <div class="legend-row"><span class="legend-icon legend-muted">⌨</span><span>Teclado e mouse seguem ignorados nos alertas</span></div>
+        </div>
+      </section>
+
+      <section class="panel sidebar-panel wallpaper-panel">
+        <div class="panel-head">Preview da área de trabalho</div>
+        <div class="wallpaper-wrap">
+          <div class="wallpaper-frame">
+            <img id="wallpaperPreview" class="wallpaper-preview hidden" alt="Preview do wallpaper atual">
+            <div id="wallpaperPlaceholder" class="wallpaper-placeholder">Lendo wallpaper atual...</div>
+          </div>
+        </div>
+      </section>
+    </aside>
+
+    <main class="main-shell">
+      <header class="topbar">
+        <div>
+          <h2 id="headerTitle">Painel de Diagnóstico</h2>
+          <p id="headerSubtitle" class="hidden"></p>
+        </div>
+        <div class="topbar-chips">
+          <div id="problemChip" class="chip">Análise</div>
+          <div id="generatedAt" class="chip">-</div>
+        </div>
+      </header>
+
+      <div id="errorBanner" class="error-banner hidden"></div>
+
+      <section class="workspace-grid">
+        <section class="panel tree-panel">
+          <div class="tree-header">
+            <div>
+              <div class="panel-head no-border">Categorias de drivers</div>
+              <div class="tree-subtitle">Árvore completa, inspirada no Gerenciador de Dispositivos.</div>
+            </div>
+            <div class="tree-toolbar">
+              <input id="searchInput" type="text" placeholder="Filtrar nome, fabricante, INF...">
+            </div>
+          </div>
+          <div id="categories" class="tree-view"></div>
+        </section>
+
+        <section class="right-column">
+          <section class="panel info-panel">
+            <div class="panel-head">Informações principais</div>
+            <div id="infoGrid" class="info-grid compact-info"></div>
+          </section>
+
+          <section class="right-mid-grid">
+            <section class="panel compact-panel">
+              <div class="panel-head">GPUs detectadas</div>
+              <div id="gpuList" class="stack-list compact-list"></div>
+            </section>
+
+            <section class="panel compact-panel">
+              <div class="panel-head">Discos detectados</div>
+              <div id="diskList" class="stack-list compact-list"></div>
+            </section>
+          </section>
+
+          <section class="panel detail-panel">
+            <div class="panel-head">Detalhes do driver selecionado</div>
+            <div id="driverDetail" class="driver-detail"></div>
+          </section>
+        </section>
+      </section>
+    </main>
+  </div>
+
+  <script src="/assets/app.js"></script>
+</body>
+</html>
