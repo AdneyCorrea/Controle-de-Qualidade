@@ -6,21 +6,11 @@ O que foi ajustado:
 - textos principais maiores
 - contraste mais forte em vermelho/preto
 - cards e detalhes com leitura mais limpa na tela
-- criacao automatica de atalho com a logo do pombo
 
-Como abrir:
-1) Extraia a pasta inteira.
-2) Dê dois cliques em Executar_App.cmd.
-3) No primeiro uso, o pacote cria automaticamente um atalho "Controle de Qualidade.lnk"
-   com a logo do pombo na propria pasta e tambem na Area de Trabalho.
-
-Importante:
-- O Windows nao permite trocar de forma nativa o icone do arquivo .cmd em si.
-- Por isso, o pacote cria um atalho .lnk com a logo do pombo, que fica mais bonito para abrir o app.
 
 Arquivos principais:
+- Controle de Qualide.exe
 - Executar_App.cmd
-- Criar_Atalho_Pombo.ps1
 - launcher.ps1
 - scripts\coletar_dados.ps1
 - AtualizarDrivers\Instalar_Drivers_Offline.cmd
