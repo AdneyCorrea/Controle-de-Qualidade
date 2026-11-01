@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="pt-BR">
+<!-- Estrutura do painel. app.js preenche os elementos por ID; styles.css define a aparencia. -->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Controle de Qualidade</title>
+  <link rel="icon" href="/assets/logo.ico">
+  <link rel="stylesheet" href="/assets/styles.css">
+</head>
+<body>
+  <!-- Carregamento: cobre o painel enquanto a API local coleta os dados. -->
+  <div id="loading" class="loading-overlay">
+    <div class="loading-card">
+      <div class="spinner"></div>
+      <div class="loading-title">Carregando painel</div>
+      <div id="loadingText" class="loading-text">Lendo hardware, drivers e discos...</div>
+    </div>
+  </div>
+
+  <!-- Layout principal: barra lateral de comandos e area de diagnostico. -->
+  <div class="app-shell">
+    <aside class="sidebar">
+      <!-- Identidade visual: os textos e o logo podem vir de config/ui-config.json. -->
+      <div class="brand">
+        <div class="brand-logo"><img id="logoImage" src="/assets/logo.png" alt="logo"></div>
+        <div>
+          <h1 id="appTitle">Controle de Qualidade</h1>
+          <p id="appSubtitle">Diagnóstico visual do sistema, discos e drivers</p>
+        </div>
+      </div>
+
+      <!-- Acoes: eventos registrados em bindEvents(), no JavaScript. BIOS e reinicio pedem confirmacao. -->
+      <div class="actions">
+        <button id="refreshBtn" class="btn btn-primary">Atualizar dados</button>
+        <button id="fullscreenBtn" class="btn btn-secondary">Tela cheia</button>
+        <button id="driverUpdateBtn" class="btn btn-tertiary actions-wide">Atualizar Drivers</button>
+        <button id="biosBtn" class="btn btn-secondary actions-wide">BIOS</button>
+        <button id="rebootBtn" class="btn btn-secondary actions-wide">Reiniciar</button>
+      </div>
+
+      <!-- Resumo: contagens de drivers, alertas, GPUs e discos inseridas por renderSummary(). -->
+      <section class="panel sidebar-panel">
+        <div class="panel-head">Resumo rápido</div>
+        <div id="summaryGrid" class="summary-grid"></div>
+      </section>
+
+      <!-- Legenda dos estados: teclado e mouse continuam fora dos alertas de qualidade. -->
+      <section class="panel sidebar-panel sidebar-note">
+        <div class="panel-head">Leitura da árvore</div>
+        <div class="note-body">
+          <div class="legend-row"><span class="legend-icon legend-warn">⚠</span><span>Driver faltante ou com problema</span></div>
+          <div class="legend-row"><span class="legend-icon legend-ok">•</span><span>Driver lido sem alerta</span></div>
+          <div class="legend-row"><span class="legend-icon legend-muted">⌨</span><span>Teclado e mouse seguem ignorados nos alertas</span></div>
+        </div>
+      </section>
+    </aside>
+
+    <main class="main-shell">
+      <!-- Cabecalho: titulo configuravel, assinatura e resultado da avaliacao. -->
+      <header class="topbar">
+        <div>
+          <div class="header-heading">
+            <h2 id="headerTitle">Painel de Diagnóstico</h2>
+            <span class="header-credit">by Adney 🔧</span>
+          </div>
+          <p id="headerSubtitle" class="hidden"></p>
+        </div>
+        <div class="topbar-chips">
+          <div id="problemChip" class="chip">Análise</div>
+          <div id="generatedAt" class="chip">-</div>
+        </div>
+      </header>
+
+      <!-- Mensagens de erro, sucesso ou aviso; a classe hidden controla a visibilidade. -->
+      <div id="errorBanner" class="error-banner hidden"></div>
+
+      <!-- Area de trabalho: arvore de drivers a esquerda e informacoes a direita. -->
+      <section class="workspace-grid">
+        <section class="panel tree-panel">
+          <div class="tree-header">
+            <div>
+              <div class="panel-head no-border">Categorias de drivers</div>
+              <div class="tree-subtitle">Gerenciador de Dispositivos.</div>
+            </div>
+            <div class="tree-toolbar">
+              <input id="searchInput" type="text" placeholder="Filtrar nome, fabricante, INF...">
+            </div>
+          </div>
+          <!-- renderCategories() cria a arvore filtrada e registra seus eventos. -->
+          <div id="categories" class="tree-view"></div>
+        </section>
+
+        <!-- Hardware e detalhes: conteudos atualizados com o mesmo resultado da coleta. -->
+        <section class="right-column">
+          <section class="panel info-panel">
+            <div class="panel-head">Informações principais</div>
+            <div id="infoGrid" class="info-grid compact-info"></div>
+          </section>
+
+          <section class="right-mid-grid">
+            <section class="panel compact-panel">
+              <div class="panel-head">GPUs detectadas</div>
+              <div id="gpuList" class="stack-list compact-list"></div>
+            </section>
+
+            <section class="panel compact-panel">
+              <div class="panel-head">Discos detectados</div>
+              <div id="diskList" class="stack-list compact-list"></div>
+            </section>
+          </section>
+
+          <!-- A selecao na arvore atualiza os dados e os botoes de exportacao do Hardware ID. -->
+          <section class="panel detail-panel">
+            <div class="panel-head">Detalhes do driver selecionado</div>
+            <div id="driverDetail" class="driver-detail"></div>
+          </section>
+        </section>
+      </section>
+    </main>
+  </div>
+
+  <!-- Inicializacao apos criar o DOM: configura eventos, heartbeat, textos e coleta. -->
+  <script src="/assets/app.js"></script>
+</body>
+</html>
